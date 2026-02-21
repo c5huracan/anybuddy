@@ -4,34 +4,57 @@
 
 AnyBuddy connects your favorite messaging app to an AI backend — your own personal assistant, running on your own infra, with your own tools.
 
-## Quick Start (Discord + SolveIt)
+## Quick Start
 
-1. Create a Discord bot at [discord.com/developers](https://discord.com/developers/applications)
+### Discord
+
+1. Create a bot at [discord.com/developers](https://discord.com/developers/applications)
 2. Enable **Message Content Intent** in Bot settings
 3. Invite bot to your server (OAuth2 → bot scope → Send Messages, Read Message History, View Channels)
-4. Set env vars:
-   - `ANYBUDDY_DISCORD_TOKEN` — your bot token
-   - `ANYBUDDY_CHANNEL` — channel ID to listen on
-   - `ANYBUDDY_DIALOG` — solveit dialog name (default: `anybuddy-discord`)
-   - `ANYBUDDY_TZ` — timezone (default: `US/Central`)
-   - `ANYBUDDY_VERBOSE` — set to `1` for debug logging
-5. `python anybuddy_discord.py`
+4. Set env vars and run:
+```bash
+export ANYBUDDY_DISCORD_TOKEN=your-token
+export ANYBUDDY_CHANNEL=your-channel-id
+export ANYBUDDY_DIALOG=anybuddy-discord
+python anybuddy_discord.py
+```
+
+### Telegram
+
+1. Message [@BotFather](https://t.me/BotFather) → `/newbot`
+2. Set env vars and run:
+```bash
+export ANYBUDDY_TELEGRAM_TOKEN=your-token
+export ANYBUDDY_DIALOG=anybuddy-discord
+python anybuddy_telegram.py
+```
+
+## Environment Variables
+
+| Variable | Required | Default | Description |
+|---|---|---|---|
+| `ANYBUDDY_DISCORD_TOKEN` | Discord | — | Discord bot token |
+| `ANYBUDDY_TELEGRAM_TOKEN` | Telegram | — | Telegram bot token |
+| `ANYBUDDY_CHANNEL` | Discord | — | Discord channel ID |
+| `ANYBUDDY_DIALOG` | No | `anybuddy-discord` | SolveIt dialog name |
+| `ANYBUDDY_TZ` | No | `US/Central` | Timezone |
+| `ANYBUDDY_VERBOSE` | No | `false` | Debug logging (`1`/`true`) |
 
 ## Architecture
 
 Three clean layers:
 
-- **Adapter** — thin platform wrapper (Discord, WhatsApp, Telegram...)
+- **Adapter** — thin platform wrapper (Discord, Telegram, WhatsApp...)
 - **Brain** — AI backend (SolveIt dialog, claudette, any LLM)
 - **Runner** — wires adapter events to brain
 
-~90 lines. No framework. No magic.
+~90 lines per adapter. No framework. No magic.
 
 ## Roadmap
 
 - [x] Discord adapter
+- [x] Telegram adapter
 - [ ] WhatsApp adapter (neonize)
-- [ ] Telegram adapter
 - [ ] ClaudetteBrain (self-hosted mode)
 - [ ] Image/attachment handling
 - [ ] Message batching
