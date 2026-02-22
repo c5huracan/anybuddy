@@ -15,7 +15,6 @@ AnyBuddy connects your favorite messaging app to an AI backend — your own pers
 ```bash
 export ANYBUDDY_DISCORD_TOKEN=your-token
 export ANYBUDDY_CHANNEL=your-channel-id
-export ANYBUDDY_DIALOG=anybuddy-discord
 python anybuddy_discord.py
 ```
 
@@ -25,20 +24,45 @@ python anybuddy_discord.py
 2. Set env vars and run:
 ```bash
 export ANYBUDDY_TELEGRAM_TOKEN=your-token
-export ANYBUDDY_DIALOG=anybuddy-discord
 python anybuddy_telegram.py
 ```
 
-## Environment Variables
+### Choosing a Brain
+
+AnyBuddy supports two AI backends:
+
+- **SolveitBrain** (default) — uses a [SolveIt](https://solve.it.com) dialog as the AI backend. Gets web search, tool calling, and dialog memory for free. Requires a running solveit instance.
+- **ClaudetteBrain** — uses [claudette](https://github.com/AnswerDotAI/claudette) to call Claude directly. Self-hosted, no solveit dependency. Includes web search via Anthropic's built-in tool.
+
+Switch via CLI flag or env var:
+```bash
+python anybuddy_telegram.py --brain claudette
+python anybuddy_discord.py --brain solveit
+# or
+export ANYBUDDY_BRAIN=claudette
+```
+
+## Configuration
+
+### Environment Variables
 
 | Variable | Required | Default | Description |
 |---|---|---|---|
 | `ANYBUDDY_DISCORD_TOKEN` | Discord | — | Discord bot token |
 | `ANYBUDDY_TELEGRAM_TOKEN` | Telegram | — | Telegram bot token |
 | `ANYBUDDY_CHANNEL` | Discord | — | Discord channel ID |
+| `ANYBUDDY_BRAIN` | No | `solveit` | Brain backend (`solveit` or `claudette`) |
 | `ANYBUDDY_DIALOG` | No | `anybuddy-discord` | SolveIt dialog name |
 | `ANYBUDDY_TZ` | No | `US/Central` | Timezone |
 | `ANYBUDDY_VERBOSE` | No | `false` | Debug logging (`1`/`true`) |
+
+### CLI Flags
+
+All env vars can be overridden via CLI flags (flags take priority):
+
+```bash
+python anybuddy_telegram.py --brain claudette --verbose true --tz Europe/Amsterdam
+```
 
 ## Architecture
 
@@ -54,8 +78,8 @@ Three clean layers:
 
 - [x] Discord adapter
 - [x] Telegram adapter
+- [x] ClaudetteBrain (self-hosted mode)
 - [ ] WhatsApp adapter (neonize)
-- [ ] ClaudetteBrain (self-hosted mode)
 - [ ] Image/attachment handling
 - [ ] Message batching
 
