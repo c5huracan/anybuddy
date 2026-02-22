@@ -2,3 +2,5 @@ discord.py
 python-telegram-bot
 fastcore
 dialoghelper
+claudette
+anthropic
