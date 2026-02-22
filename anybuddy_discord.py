@@ -1,5 +1,5 @@
 import os, asyncio, discord
-from anybuddy import SolveitBrain, format_output, log, DNAME
+from anybuddy import get_brain, format_output, log
 from fastcore.utils import store_attr
 
 class DiscordAdapter:
@@ -43,5 +43,4 @@ async def run_discord_bot(adapter, brain):
 if __name__ == '__main__':
     channel = int(os.environ.get('ANYBUDDY_CHANNEL', '1440419500494422069'))
     da = DiscordAdapter(os.environ['ANYBUDDY_DISCORD_TOKEN'], channel_id=channel)
-    brain = SolveitBrain()
-    asyncio.run(run_discord_bot(da, brain))
+    asyncio.run(run_discord_bot(da, get_brain()))

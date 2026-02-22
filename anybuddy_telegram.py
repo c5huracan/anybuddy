@@ -1,5 +1,5 @@
 import os
-from anybuddy import SolveitBrain, format_output, log, DNAME
+from anybuddy import get_brain, format_output, log
 from fastcore.utils import store_attr
 from telegram import Update
 from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTypes
@@ -29,7 +29,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 if __name__ == '__main__':
     adapter = TelegramAdapter(os.environ['ANYBUDDY_TELEGRAM_TOKEN'])
-    brain = SolveitBrain()
+    brain = get_brain()
     adapter.app.bot_data['brain'] = brain
     adapter.app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     print("✅ Starting AnyBuddy on Telegram...")
