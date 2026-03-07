@@ -1,0 +1,45 @@
+#!/usr/bin/env python3
+"""Meyhem search skill for OpenClaw agent."""
+import sys
+
+def main():
+    args = sys.argv[1:]
+    if not args or args[0] in ('-h', '--help'):
+        print("Usage: search.py <query> [-n <num>] [--content]")
+        print("\nOptions:")
+        print("  -n <num>      Number of results (default: 5)")
+        print("  --content     Fetch full page content for top result")
+        print("  --report      Report top result as successful")
+        print("\nNo API key needed.")
+        sys.exit(0)
+
+    n, content, report = 5, False, False
+    if '-n' in args:
+        i = args.index('-n')
+        n = int(args[i+1]); args = args[:i] + args[i+2:]
+    if '--content' in args:
+        content = True; args.remove('--content')
+    if '--report' in args:
+        report = True; args.remove('--report')
+
+    query = ' '.join(args)
+    from meyhem import Meyhem
+    m = Meyhem('openclaw-agent')
+    results = m.search(query, num_results=n)
+
+    for i, r in enumerate(results):
+        print(f"--- Result {i+1} ---")
+        print(f"Title: {r.title}")
+        print(f"URL: {r.url}")
+        print(f"Score: {r.score:.2f}")
+        print(f"Snippet: {r.snippet}")
+        if content and i == 0:
+            sel = m.select(r)
+            print(f"Content:\n{sel.get('content', '')[:5000]}")
+        print()
+
+    if report and results:
+        m.report(results[0], True)
+        print("Reported top result as successful.")
+
+if __name__ == '__main__': main()

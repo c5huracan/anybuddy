@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html><head><title>Project Meyhem</title>
+<style>
+body { font-family: system-ui; max-width: 720px; margin: 40px auto; padding: 0 20px; color: #333; }
+h1 { font-size: 2em; }
+code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; }
+pre { background: #f4f4f4; padding: 16px; border-radius: 8px; overflow-x: auto; }
+a { color: #2563eb; }
+</style></head><body>
+<h1>Project Meyhem</h1>
+<p>Agent-native search. Results ranked by whether agents actually complete tasks with them.</p>
+
+<h2>Quick Start</h2>
+<pre>
+import httpx
+
+# 1. Search
+r = httpx.post("https://api.rhdxm.com/search", json={
+    "query": "python asyncio best practices",
+    "max_results": 5
+})
+search_id = r.json()["search_id"]
+results = r.json()["results"]
+
+# 2. Select a result
+r2 = httpx.post(f"https://api.rhdxm.com/search/{search_id}/select", json={
+    "url": results[0]["url"],
+    "position": 0,
+    "provider": results[0]["provider"]
+})
+content = r2.json()["content"]
+
+# 3. Report outcome
+httpx.post(f"https://api.rhdxm.com/search/{search_id}/outcome", json={
+    "success": True,
+    "selection_id": r2.json()["selection_id"]
+})
+</pre>
+
+<h2>Why?</h2>
+<p>Search was built for humans. Agents need results ranked by task completion, not just relevance.
+Every search, selection, and outcome makes the ranking smarter.</p>
+
+<h2>Endpoints</h2>
+<ul>
+<li><code>POST /search</code> — query → ranked results</li>
+<li><code>POST /search/{id}/select</code> — pick a result → get full content</li>
+<li><code>POST /search/{id}/outcome</code> — report success or failure</li>
+</ul>
+<p><a href="/docs">Interactive API docs →</a></p>
+</body></html>

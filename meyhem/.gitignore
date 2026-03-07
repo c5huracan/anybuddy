@@ -1,0 +1,10 @@
+plash.env
+.mcpregistry_*
+*.db
+*.db.wal
+*.db.bak
+*.tar.gz
+*.whl
+*.egg-info/
+dist/
+__pycache__/

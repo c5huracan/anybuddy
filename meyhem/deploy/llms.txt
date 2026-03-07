@@ -1,0 +1,55 @@
+# Meyhem
+
+> Smart search for agents, however you build them. The more agents use it, the smarter it gets. No API key required.
+
+Meyhem blends multiple search engines, deduplicates results, and learns from agent outcomes. Every outcome report improves ranking for all agents.
+
+## Install
+
+- [PyPI](https://pypi.org/project/meyhem/): pip install meyhem
+
+## Quickstart
+
+    from meyhem import Meyhem
+    m = Meyhem('my-agent')
+    res = m.search("Python asyncio best practices")
+    m.select(res[0])
+    m.report(res[0], True)
+
+## Docs
+
+- [API Reference](https://api.rhdxm.com/docs): Interactive API docs (Scalar)
+- [GitHub](https://github.com/c5huracan/meyhem): Source code and examples
+
+## Endpoints
+
+- POST /search: Query multiple search engines, get ranked results
+- POST /search/{id}/select: Pick a result, get full page content
+- POST /search/{id}/outcome: Report success or failure (boolean)
+- POST /discover: Describe what you need, get an MCP server config
+
+## MCP
+
+Works with Claude Desktop, Cursor, and any MCP client:
+
+    {"mcpServers": {"meyhem": {"command": "npx", "args": ["mcp-remote", "https://api.rhdxm.com/mcp/"]}}}
+
+## Meta-Agent
+
+Describe what you need, get a working agent script:
+
+- [meta_agent.py](https://github.com/c5huracan/meyhem/blob/main/meta_agent.py): python meta_agent.py "monitor GitHub repos and post to Slack"
+
+## Research Reports
+
+AI-generated deep dives, powered by Meyhem's search pipeline:
+
+- [OpenClaw Skills Directory](https://api.rhdxm.com/r/jDbHHKcH): Best AI agent tools by category
+- [Sales Automation & CRM](https://api.rhdxm.com/r/KPZ59jFd): MCP servers for HubSpot, pipelines, sales workflows
+- [Lead Generation & Outreach](https://api.rhdxm.com/r/Nzw5VN3P): Apollo, email automation, prospecting
+- [Competitive Intelligence](https://api.rhdxm.com/r/NfAikWqX): Market research and competitive analysis
+- [LinkedIn Marketing](https://api.rhdxm.com/r/RPZuAGqq): Content automation and social marketing
+- [Project Management](https://api.rhdxm.com/r/h8vGMokP): Notion, productivity, and workflow tools
+- [Agent Web Research](https://api.rhdxm.com/r/68Zznjo3): How AI agents use MCP for automated research
+
+Generate your own: https://api.rhdxm.com/research?q=your+topic+here

@@ -1,0 +1,9 @@
+httpx
+duckdb
+fastapi
+uvicorn
+mcp
+scalar-fastapi
+claudette
+nest-asyncio
+mistletoe
