@@ -1,7 +1,0 @@
-User-agent: *
-Allow: /
-Allow: /r/
-Allow: /docs
-Allow: /research
-
-Sitemap: https://api.rhdxm.com/sitemap.xml
