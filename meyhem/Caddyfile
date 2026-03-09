@@ -1,7 +1,0 @@
-{
-    email you@example.com
-}
-
-api.rhdxm.com {
-    reverse_proxy localhost:8888
-}
