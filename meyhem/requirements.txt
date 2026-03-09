@@ -1,5 +1,0 @@
-httpx
-duckdb
-fastapi
-uvicorn
-mcp
